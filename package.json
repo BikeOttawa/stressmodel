@@ -1,0 +1,23 @@
+{
+  "name": "stressmodel",
+  "version": "1.0.0",
+  "description": "Cycling Level of Stress Model",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BikeOttawa/stressmodel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BikeOttawa/stressmodel/issues"
+  },
+  "homepage": "https://github.com/BikeOttawa/stressmodel#readme",
+  "dependencies": {
+    "xml2object": "^0.1.2"
+  }
+}
