@@ -4,7 +4,7 @@
   "description": "Cycling Level of Stress Model",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/BikeOttawa/stressmodel#readme",
   "dependencies": {
     "xml2object": "^0.1.2"
+  },
+  "devDependencies": {
+    "tape": "^4.9.0"
   }
 }
