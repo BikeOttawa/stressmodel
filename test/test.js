@@ -1,3 +1,4 @@
+'use strict';
 const test = require('tape')
 const stressmodel = require('../stressmodel.js')
 
@@ -86,7 +87,7 @@ let ways = [
   {lts: 4, id: 'm11-6', rule: 'm11', tags: { 'highway': 'tertiary', 'lanes': '5', 'maxspeed': '50' }, desc: 'Mixed traffic, highway=tertiary, maxspeed=50'},
   {lts: 4, id: 'm12-1', rule: 'm12', tags: { 'highway': 'residential', 'lanes': '1', 'maxspeed': '51' }, desc: 'Mixed traffic, highway=residential, lanes=4'},
   {lts: 4, id: 'm12-2', rule: 'm12', tags: { 'highway': 'primary', 'lanes': '1', 'maxspeed': '51' }, desc: 'Mixed traffic, maxspeed 51+'},
-  {lts: 4, id: 'm12-3', rule: 'm12', tags: { 'highway': 'primary', 'lanes': '1'}, desc: 'Mixed traffic, default maxspeed on primary highway'}
+  {lts: 4, id: 'm12-3', rule: 'm12', tags: { 'highway': 'primary', 'lanes': '1' }, desc: 'Mixed traffic, default maxspeed on primary highway'}
 ]
 
 test('Stressmodel General Tests', (assert) => {
