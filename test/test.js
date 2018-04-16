@@ -8,6 +8,7 @@ let ways = [
   {lts: 0, id: 'p3-1', rule: 'p3', tags: { 'highway': 'motorway', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway'},
   {lts: 0, id: 'p4-1', rule: 'p4', tags: { 'highway': 'motorway_link', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway_link'},
   {lts: 0, id: 'p5-1', rule: 'p5', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40', 'footway': 'sidewalk' }, desc: 'Cycling not permitted. highway=footway and footway=sidewalk'},
+  {lts: 0, id: 'p6-1', rule: 'p6', tags: { 'highway': 'residential', 'lanes': '3', 'maxspeed': '40', 'bicycle': 'yes', 'access': 'no' }, desc: 'Cycling not permitted. access=no'},
   {lts: 1, id: 's1-1', rule: 's1', tags: { 'highway': 'path', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=path'},
   {lts: 1, id: 's2-1', rule: 's2', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=footway'},
   {lts: 1, id: 's3-1', rule: 's3', tags: { 'highway': 'cycleway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=cycleway'},

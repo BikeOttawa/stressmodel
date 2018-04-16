@@ -148,6 +148,9 @@
       if (HasTagValue(way, 'bicycle', 'no')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to bicycle=\'no\' tag.'], rule: 'p2' } }
       }
+      if (HasTagValue(way, 'access', 'no')) {
+        return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to access=\'no\' tag.'], rule: 'p6' } }
+      }
       if (HasTagValue(way, 'highway', 'motorway')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to highway=\'motorway\' tag.'], rule: 'p3' } }
       } else if (HasTagValue(way, 'highway', 'motorway_link')) {
