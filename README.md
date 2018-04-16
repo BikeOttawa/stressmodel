@@ -2,7 +2,7 @@
 
 This is a console application that takes an OSM file and performs an analysis on the ways (streets) based on the information stored in their tags. The arguments are as follows:
 
- `node stressmodel -f osmfilename -d outputpath [-p prefix][-v][-z]`
+ `node main.js -f osmfilename -d outputpath [-p prefix][-v][-z]`
  
  where:
  
@@ -24,7 +24,7 @@ npm install
 
  ## Example ##
  
- `node stressmodel -f ~\maps\myosmfile.osm -d \var\www\stressmap\data -p lts_ -z`
+ `node main.js -f ~\maps\myosmfile.osm -d \var\www\stressmap\data -p lts_ -z`
  
  will analyze the specified OSM file and produce 4 output files in geojson format in the \var\www\stressmap\data directory. The files will be named lts_1.json, lts_2.json, lts_3.json and lts_4.json and each will contain the streets for the corresponding LTS level (1-4). An additional file called lts_0.json will be generated that includes non-cycling highways.
  
