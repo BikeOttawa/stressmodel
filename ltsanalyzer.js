@@ -12,27 +12,31 @@ class ltsanalyzer {
     this.destdir = options.destdir
     this.ways = {}
     this.nodes = {}
+    this.inputfile = ''
     this.onCompleteLoadWays = this.onCompleteLoadWays.bind(this)
+    this.onCompleteLoadNodes = this.onCompleteLoadNodes.bind(this)
+    this.processWays = this.processWays.bind(this)
     this.processNodes = this.processNodes.bind(this)
   }
 
   Run (name, osmfilename, onComplete) {
     this.onCompleteRun = onComplete
     this.model = loadmodel(name)
+    this.inputfile = osmfilename
     if (this.model !== null) {
       if (this.verbose) console.log('Loading "' + osmfilename + '"...')
-      this.loadWays(osmfilename)
+      this.loadWays()
     } else {
-      onComplete('Invalid model name: ' + name)
+      onCompleteRun('Invalid model name: ' + name)
     }
   }
 
-  loadWays (path) {
+  loadWays () {
     // Create a new xml parser with an array of xml elements to look for
-    let parser = new Xml2object([ 'way', 'node' ], path)
+    let parser = new Xml2object(['way'], this.inputfile)
 
     // Bind to the object event to work with the objects found in the XML file
-    parser.on('object', this.processNodes)
+    parser.on('object', this.processWays)
 
     // Bind to the file end event to tell when the file is done being streamed
     parser.on('end', this.onCompleteLoadWays)
@@ -41,52 +45,66 @@ class ltsanalyzer {
     parser.start()
   }
 
-  onCompleteLoadWays () {
-    let err = null
-    if (!this.analyzeWays()) {
-      err = 'Failure while analyzing the ways'
-    } else {
-      if (!this.createLevelFiles()) {
-        err = 'Failure while creating the level files'
-      }
-    }
-    this.onCompleteRun(err)
-  }
-
-  processNodes (name, childNode) {
+  processWays (name, childNode) {
     if (name === 'way') {
       let newway = {level: 0, tags: {}, nodes: []}
       let tags = childNode.tag
       if (Array.isArray(tags)) {
         for (let t in childNode.tag) {
-          newway.tags[childNode.tag[t].k] = childNode.tag[t].v
+          if (this.model.usesTag(childNode.tag[t].k)) {
+            newway.tags[childNode.tag[t].k] = childNode.tag[t].v
+          }
         }
       }
       else if (typeof tags !== 'undefined') {
-        newway.tags[tags.k] = tags.v
+        if (this.model.usesTag(tags.k)) {
+          newway.tags[tags.k] = tags.v
+        }
       }
       let limit = childNode.nd.length
       for (let i = 0; i < limit; i++) {
         newway.nodes.push(childNode.nd[i].ref)
       }
-      if (this.model.isBikingPermitted(newway) || (this.zero && typeof newway.tags['highway'] !== 'undefined')) {
+      newway.level = this.model.evaluateLTS(newway).lts
+      if (newway.level > 0 || (this.zero && typeof newway.tags['highway'] !== 'undefined')) {
         this.ways[childNode.id] = newway
+        for (let i = 0; i < newway.nodes.length; i++) {
+          this.nodes[newway.nodes[i]] = {}
+        }
       }
-    } else if (name === 'node') {
-      let newnode = {lat: childNode.lat, lon: childNode.lon}
-      this.nodes[childNode.id] = newnode
+    } 
+  }
+
+  onCompleteLoadWays () {
+    // Create a new xml parser with an array of xml elements to look for
+    let parser = new Xml2object(['node'], this.inputfile)
+
+    // Bind to the object event to work with the objects found in the XML file
+    parser.on('object', this.processNodes)
+
+    // Bind to the file end event to tell when the file is done being streamed
+    parser.on('end', this.onCompleteLoadNodes)
+
+    // Start parsing the XML
+    parser.start()
+  
+  }
+  
+  processNodes (name, childNode) {
+    if (name === 'node') {
+      let newnode = this.nodes[childNode.id]
+      if (typeof newnode !== 'undefined') {
+        this.nodes[childNode.id] = {lat: childNode.lat, lon: childNode.lon}
+      }
     }
   }
 
-  analyzeWays () {
-    if (this.verbose) console.log('Analyzing using model "' + this.model.name + '"...')
-    for (let id in this.ways) {
-      if (this.ways.hasOwnProperty(id)) {
-        let way = this.ways[id]
-        way.level = this.model.evaluateLTS(way).lts
-      }
+  onCompleteLoadNodes () {
+    let err = null
+    if (!this.createLevelFiles()) {
+      err = 'Failure while creating the level files'
     }
-    return true
+    this.onCompleteRun(err)  
   }
 
   createLevelFiles () {
@@ -100,42 +118,41 @@ class ltsanalyzer {
       if (fs.existsSync(lfilename)) {
         fs.unlinkSync(lfilename)
       }
-      const file = fs.createWriteStream(lfilename)
-      file.write('{"type":"FeatureCollection","features":[')
+      let buffer = '{"type":"FeatureCollection","features":['
       let fsep = false
       for (let id in this.ways) {
         if (!this.ways.hasOwnProperty(id)) continue
         let way = this.ways[id]
         if (way.level === level) {
           if (fsep) {
-            file.write(',')
+            buffer += ','
           }
           fsep = true
-          file.write('{"type":"Feature","id":"way/')
-          file.write(id)
-          file.write('","properties":{"id":"way/')
-          file.write(id)
-          file.write('"},"geometry":{"type":"LineString","coordinates":[')
+          buffer += '{"type":"Feature","id":"way/'
+          buffer += id
+          buffer += '","properties":{"id":"way/'
+          buffer += id 
+          buffer += '"},"geometry":{"type":"LineString","coordinates":['
           let csep = false
           let ln = way.nodes.length
           for (let i = 0; i < ln; i++) {
             let nodeid = way.nodes[i]
             let node = this.nodes[nodeid]
             if (csep) {
-              file.write(',')
+              buffer += ','
             }
             csep = true
-            file.write('[')
-            file.write(this.formatLatLong(node.lon))
-            file.write(',')
-            file.write(this.formatLatLong(node.lat))
-            file.write(']')
+            buffer += '['
+            buffer += this.formatLatLong(node.lon)
+            buffer += ','
+            buffer += this.formatLatLong(node.lat)
+            buffer += ']'
           }
-          file.write(']}}')
+          buffer += ']}}'
         }
       }
-      file.write(']}')
-      file.end()
+      buffer += ']}'
+      fs.writeFileSync(lfilename, buffer)
     }
     return true
   }
