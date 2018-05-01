@@ -427,6 +427,10 @@
       message.push('Setting LTS to 1 because highway=\'steps\'.')
       return { isMixedTraffic: true, result: { lts: 1, message: message, rule: 'm1' } }
     }
+    if (HasTagValue(way, 'highway', 'pedestrian')) {
+      message.push('Setting LTS to 1 because highway=\'pedestrian\'.')
+      return { isMixedTraffic: true, result: { lts: 1, message: message, rule: 'm13' } }
+    }
     if (HasTagValue(way, 'highway', 'service') && HasTagValue(way, 'service', 'alley')) {
       message.push('Setting LTS to 2 because highway=\'service\' and service=\'alley\'.')
       return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm2' } }
