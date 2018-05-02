@@ -185,9 +185,9 @@
     if (HasTagValue(way, 'highway', 'path')) {
       rule = 's1'
       message.push('This way is a separated path because highway=\'path\'.')
-    } else if (HasTagValue(way, 'highway', 'footway')) {
+    } else if (HasTagValue(way, 'highway', 'footway') && !HasTagValue(way, 'footway', 'crossing')) {
       rule = 's2'
-      message.push('This way is a separated path because highway=\'footway\'.')
+      message.push('This way is a separated path because highway=\'footway\' but it is not a crossing.')
     } else if (HasTagValue(way, 'highway', 'cycleway')) {
       rule = 's3'
       message.push('This way is a separated path because highway=\'cycleway\'.')
@@ -430,6 +430,10 @@
     if (HasTagValue(way, 'highway', 'pedestrian')) {
       message.push('Setting LTS to 1 because highway=\'pedestrian\'.')
       return { isMixedTraffic: true, result: { lts: 1, message: message, rule: 'm13' } }
+    }
+    if (HasTagValue(way, 'highway', 'footway') && HasTagValue(way, 'footway', 'crossing')) {
+      message.push('Setting LTS to 2 because highway=\'footway\' and footway=\'crossing\'.')
+      return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm14' } }
     }
     if (HasTagValue(way, 'highway', 'service') && HasTagValue(way, 'service', 'alley')) {
       message.push('Setting LTS to 2 because highway=\'service\' and service=\'alley\'.')

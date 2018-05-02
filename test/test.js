@@ -89,7 +89,8 @@ let ways = [
   {lts: 4, id: 'm12-1', rule: 'm12', tags: { 'highway': 'residential', 'lanes': '1', 'maxspeed': '51' }, desc: 'Mixed traffic, highway=residential, lanes=4'},
   {lts: 4, id: 'm12-2', rule: 'm12', tags: { 'highway': 'primary', 'lanes': '1', 'maxspeed': '51' }, desc: 'Mixed traffic, maxspeed 51+'},
   {lts: 4, id: 'm12-3', rule: 'm12', tags: { 'highway': 'primary', 'lanes': '1' }, desc: 'Mixed traffic, default maxspeed on primary highway'},
-  {lts: 1, id: 'm13-1', rule: 'm13', tags: { 'highway': 'pedestrian' }, desc: 'LTS 1: highway=pedestrian'}
+  {lts: 1, id: 'm13-1', rule: 'm13', tags: { 'highway': 'pedestrian' }, desc: 'LTS 1: highway=pedestrian'},
+  {lts: 2, id: 'm14-1', rule: 'm14', tags: { 'highway': 'footway', 'footway': 'crossing' }, desc: 'LTS 2: highway=footway and footway=crossing'}
 ]
 
 test('Stressmodel General Tests', (assert) => {
