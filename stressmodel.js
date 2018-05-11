@@ -30,7 +30,7 @@
 
   exports.name = 'default'
   exports.description = 'Standard daylight model. This model looks at roads as a single unit and does not take travel direction or intersection approaches into account.'
-  exports.version = '1.0.0'
+  exports.version = '1.0.1'
   exports.levels = 4
   exports.tags = ['access', 'bicycle', 'construction', 'cycleway', 'footway', 'highway', 'lanes', 'maxspeed', 'parking', 'service', 'shoulder']
   exports.usesTag = function (tag) {
@@ -439,6 +439,10 @@
       message.push('Setting LTS to 2 because highway=\'service\' and service=\'alley\'.')
       return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm2' } }
     }
+    if (HasTagValue(way, 'highway', 'track')) {
+      message.push('Setting LTS to 2 because highway=\'track\'.')
+      return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm15' } }
+    }
     if (maxspeed <= 50) {
       if (HasTagValue(way, 'highway', 'service')) {
         if (HasTagValue(way, 'service', 'parking_aisle')) {
@@ -448,6 +452,10 @@
         if (HasTagValue(way, 'service', 'driveway')) {
           message.push('Setting LTS to 2 because maxspeed is 50 km/h or less and service is \'driveway\'.')
           return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm4' } }
+        }
+        if (maxspeed < 35) {
+          message.push('Setting LTS to 2 because maxspeed is less than 35 km/h and highway=\'service\'.')
+          return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm16' } }
         }
       }
       if (maxspeed <= 40) {
