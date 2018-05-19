@@ -443,6 +443,10 @@
       message.push('Setting LTS to 2 because highway=\'track\'.')
       return { isMixedTraffic: true, result: { lts: 2, message: message, rule: 'm15' } }
     }
+    if (HasTagValue(way, 'motor_vehicle', 'no')) {
+      message.push('Setting LTS to 1 because motor_vehicle=\'no\'.')
+      return { isMixedTraffic: true, result: { lts: 1, message: message, rule: 'm17' } }
+    }
     if (maxspeed <= 50) {
       if (HasTagValue(way, 'highway', 'service')) {
         if (HasTagValue(way, 'service', 'parking_aisle')) {

@@ -6,6 +6,7 @@ let ways = [
   {lts: 0, id: 'p1-1', rule: 'p1', tags: { 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. No highway tag.'},
   {lts: 0, id: 'p2-1', rule: 'p2', tags: { 'highway': 'residential', 'lanes': '3', 'maxspeed': '40', 'bicycle': 'no' }, desc: 'Cycling not permitted. bicycle=no'},
   {lts: 0, id: 'p3-1', rule: 'p3', tags: { 'highway': 'motorway', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway'},
+  {lts: 0, id: 'p3-2', rule: 'p3', tags: { 'highway': 'motorway', 'maxspeed': '60', 'motor_vehicle': 'no' }, desc: 'LTS 0: highway=motorway, motor_vehicle=no'},
   {lts: 0, id: 'p4-1', rule: 'p4', tags: { 'highway': 'motorway_link', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway_link'},
   {lts: 0, id: 'p5-1', rule: 'p5', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40', 'footway': 'sidewalk' }, desc: 'Cycling not permitted. highway=footway and footway=sidewalk'},
   {lts: 0, id: 'p6-1', rule: 'p6', tags: { 'highway': 'residential', 'lanes': '3', 'maxspeed': '40', 'bicycle': 'yes', 'access': 'no' }, desc: 'Cycling not permitted. access=no'},
@@ -92,7 +93,8 @@ let ways = [
   {lts: 1, id: 'm13-1', rule: 'm13', tags: { 'highway': 'pedestrian' }, desc: 'LTS 1: highway=pedestrian'},
   {lts: 2, id: 'm14-1', rule: 'm14', tags: { 'highway': 'footway', 'footway': 'crossing' }, desc: 'LTS 2: highway=footway and footway=crossing'},
   {lts: 2, id: 'm15-1', rule: 'm15', tags: { 'highway': 'track' }, desc: 'LTS 2: highway=track'},
-  {lts: 2, id: 'm16-1', rule: 'm16', tags: { 'highway': 'service', 'maxspeed': '30' }, desc: 'LTS 2: highway=service, maxspeed=30'}
+  {lts: 2, id: 'm16-1', rule: 'm16', tags: { 'highway': 'service', 'maxspeed': '30' }, desc: 'LTS 2: highway=service, maxspeed=30'},
+  {lts: 1, id: 'm17-1', rule: 'm17', tags: { 'highway': 'primary', 'maxspeed': '60', 'motor_vehicle': 'no' }, desc: 'LTS 1: motor_vehicle=no'}
 ]
 
 test('Stressmodel General Tests', (assert) => {
