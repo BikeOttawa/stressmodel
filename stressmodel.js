@@ -32,7 +32,7 @@
   exports.description = 'Standard daylight model. This model looks at roads as a single unit and does not take travel direction or intersection approaches into account.'
   exports.version = '1.0.1'
   exports.levels = 4
-  exports.tags = ['access', 'bicycle', 'construction', 'cycleway', 'footway', 'highway', 'lanes', 'maxspeed', 'parking', 'service', 'shoulder']
+  exports.tags = ['access', 'bicycle', 'construction', 'cycleway', 'footway', 'highway', 'lanes', 'maxspeed', 'motor_vehicle', 'parking', 'service', 'shoulder']
   exports.usesTag = function (tag) {
     for (let i = 0; i < this.tags.length; i++) {
       if (tag.startsWith(this.tags[i])) {
