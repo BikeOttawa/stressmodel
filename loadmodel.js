@@ -1,6 +1,9 @@
 'use strict'
 let stressmodel = require('./stressmodel.js')
+let wintermodel = require('./wintermodel.js')
 
 module.exports = function (name) {
-  return (name === 'default' || name.length === 0) ? stressmodel : null
+  if (name === 'default' || name === 'stressmodel' || name.length == 0) return stressmodel
+  if (name === 'wintermodel') return wintermodel
+  return null
 }

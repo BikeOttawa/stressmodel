@@ -1,6 +1,7 @@
 'use strict';
 const test = require('tape')
 const stressmodel = require('../stressmodel.js')
+const wintermodel = require('../wintermodel.js')
 
 let ways = [
   {lts: 0, id: 'p1-1', rule: 'p1', tags: { 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. No highway tag.'},
@@ -102,6 +103,13 @@ test('Stressmodel General Tests', (assert) => {
   assert.equal(stressmodel.name, 'default', 'g1 - Name matches \'default\'')
   assert.equal(stressmodel.levels, 4, 'g2 - Number of levels=4')
   assert.equal(typeof stressmodel.description, 'string', 'g3 - Description must be a string.')
+  assert.end()
+})
+
+test('Wintermodel General Tests', (assert) => {
+  assert.equal(wintermodel.name, 'winter', 'g1 - Name matches \'winter\'')
+  assert.equal(wintermodel.levels, 4, 'g2 - Number of levels=4')
+  assert.equal(typeof wintermodel.description, 'string', 'g3 - Description must be a string.')
   assert.end()
 })
 

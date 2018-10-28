@@ -25,6 +25,7 @@ class Options {
     console.log('  -f, --filename=NAME  Filename is path to the OSM XML input file.')
     console.log('  -h, --help           Displays this help and exits.')
     console.log('  -i, --indent         Indent the output files in a readable format.')
+    console.log('  -m, --model=MODEL    Specifies the model to be used. The default is stressmodel.')
     console.log('  -p, --prefix=PREFIX  The prefix to be used for all output files. The')
     console.log('                       default is "level_".')
     console.log('  -v, --verbose        Enables verbose output.')
@@ -63,6 +64,21 @@ class Options {
         } else {
           console.log('Error: -p command line argument must be followed by a file prefix.')
           return false
+        }
+      } else if (arg === '-m' || arg === '--model') {
+        if (args.length >= i) {
+          i++
+          if (args[i][0] !== '-') {
+            this.model = args[i]
+          }
+          else {
+            console.log('Error: -m command line argument must be followed by a model specification.')
+            return false;
+          }
+        }
+        else {
+          console.log('Error: -m command line argument must be followed by a model specification.')
+          return false;
         }
       } else if (arg === '-v' || arg === '--verbose') {
         this.verbose = true
