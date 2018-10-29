@@ -110,6 +110,8 @@ let wintermodel_ways = [
   {lts: 0, id: 'p7-1', rule: 'wp7', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (dec-mar)'}, desc: 'Cycling not supported in winter'},
   {lts: 0, id: 'p8-1', rule: 'wp8', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (nov-feb)'}, desc: 'Cycling not supported in winter. Offset overlap'},
   {lts: 0, id: 'p8-2', rule: 'wp8', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (jan-may)'}, desc: 'Cycling not supported in winter. Offset overlap'},
+  {lts: 0, id: 'p9-1', rule: 'wp9', tags: { 'highway': 'path', 'bicycle': 'yes', 'surface': 'dirt'}, desc: 'Cycling not supported in winter. Path surface.'},
+  {lts: 0, id: 'p10-1', rule: 'wp10', tags: { 'highway': 'path', 'path': 'desire', 'bicycle': 'yes'}, desc: 'Cycling not supported in winter. Desire path.'},
   {lts: 1, id: 's1-1', rule: 's1', tags: { 'highway': 'path', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=path'},
   {lts: 1, id: 's2-1', rule: 's2', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=footway'},
   {lts: 1, id: 's3-1', rule: 's3', tags: { 'highway': 'cycleway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=cycleway'},

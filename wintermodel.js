@@ -32,7 +32,7 @@
   exports.description = 'Winter Biking. This model looks at roads as a single unit and does not take travel direction or intersection approaches into account.'
   exports.version = '1.0.0'
   exports.levels = 4
-  exports.tags = ['access', 'bicycle', 'construction', 'cycleway', 'footway', 'highway', 'lanes', 'maxspeed', 'motor_vehicle', 'parking', 'seasonal', 'service', 'shoulder', 'smoothness']
+  exports.tags = ['access', 'bicycle', 'construction', 'cycleway', 'footway', 'highway', 'lanes', 'maxspeed', 'motor_vehicle', 'parking', 'seasonal', 'service', 'shoulder', 'surface']
   exports.usesTag = function (tag) {
     for (let i = 0; i < this.tags.length; i++) {
       if (tag.startsWith(this.tags[i])) {
@@ -190,8 +190,8 @@
                 let m1 = monthabbrev[months[0]];
                 let m2 = monthabbrev[months[1]];
                 if (typeof m1 !== 'undefined' && typeof m2 !== 'undefined') {
-                  for (let m = m1; m != m2; m = (m + 1) % 12) {
-                    if (m == 11 || m <= 2) {
+                  for (let m = m1; m !== m2; m = (m + 1) % 12) {
+                    if (m === 11 || m <= 2) {
                       // At least one month falls in the Dec-Mar range.
                       return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to seasonal=\'yes\' tag.'], rule: 'wp8' } }      
                     }
@@ -204,7 +204,19 @@
             }
           }
         }
-        
+      }
+      if (HasTag(way, 'surface')) {
+        if (HasTagValue(way, 'surface', 'ground')
+        || HasTagValue(way, 'surface', 'dirt')
+        || HasTagValue(way, 'surface', 'mud')
+        || HasTagValue(way, 'surface', 'grass')
+        || HasTagValue(way, 'surface', 'gravel')
+        || HasTagValue(way, 'surface', 'fine_gravel')) {
+          return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to surface=\'' + way.tags['surface'] + '\' tag.'], rule: 'wp9' } }
+        }
+      }
+      if (HasTagValue(way, 'path', 'desire')) {
+        return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to path=\'desire\' tag.'], rule: 'wp10' } }
       }
     } else {
       return { permitted: false, result: { lts: 0, message: ['Way has neither a highway tag nor a bicycle=yes tag. The way is not a highway.'], rule: 'p1' } }
