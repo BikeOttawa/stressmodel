@@ -185,14 +185,16 @@
             }
             else {
               if (v.substr(0, 3) === 'no@') {
-                let dates = v.substr(3);
+                let dates = v.substr(3).replace(/\(/g, '').replace(/\)/g, '');
                 let months = dates.split('-');
                 let m1 = monthabbrev[months[0]];
                 let m2 = monthabbrev[months[1]];
-                for (let m = m1; m != m2; m = 12 % m + 1) {
-                  if (m == 11 || m <= 2) {
-                    // At least one month falls in the Dec-Mar range.
-                    return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to seasonal=\'yes\' tag.'], rule: 'wp8' } }      
+                if (typeof m1 !== 'undefined' && typeof m2 !== 'undefined') {
+                  for (let m = m1; m != m2; m = (m + 1) % 12) {
+                    if (m == 11 || m <= 2) {
+                      // At least one month falls in the Dec-Mar range.
+                      return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to seasonal=\'yes\' tag.'], rule: 'wp8' } }      
+                    }
                   }
                 }
               }
