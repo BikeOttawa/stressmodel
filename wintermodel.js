@@ -218,6 +218,14 @@
       if (HasTagValue(way, 'path', 'desire')) {
         return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to path=\'desire\' tag.'], rule: 'wp10' } }
       }
+      if (!HasTag(way, 'seasonal')) {
+        if (HasTagValue(way, 'highway', 'path')
+        || HasTagValue(way, 'highway', 'cycleway')
+        || HasTagValue(way, 'highway', 'footway')
+        ) {
+          return { permitted: false, result: {lts: 0, message: ['Cycling not permitted due to highway=\'' + way.tags['highway'] + '\' tag with no seasonal tag.'], rule: 'wp11' } }
+        }
+      }
     } else {
       return { permitted: false, result: { lts: 0, message: ['Way has neither a highway tag nor a bicycle=yes tag. The way is not a highway.'], rule: 'p1' } }
     }
