@@ -107,7 +107,7 @@
       } else {
         result = parseInt(maxspeed)
         if (isNaN(result)) {
-          return { maxspeed: 50, message: ['Error: Unknown \'maxspeed\' tag value \'' + maxspeed + '\'. Assuming a value of \'40\'.'] }
+          return { maxspeed: 50, message: ['Error: Unknown \'maxspeed\' tag value \'' + maxspeed + '\'. Assuming a value of \'50\'.'] }
         } else {
           return { maxspeed: maxspeed, message: [] }
         }
