@@ -167,6 +167,8 @@
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to highway=\'motorway\' tag.'], rule: 'p3' } }
       } else if (HasTagValue(way, 'highway', 'motorway_link')) {
         return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to highway=\'motorway_link\' tag.'], rule: 'p4' } }
+      } else if (HasTagValue(way, 'highway', 'proposed')) {
+        return { permitted: false, result: { lts: 0, message: ['Cycling not permitted due to highway=\'proposed\' tag.'], rule: 'p7' } }
       }
       if (HasTagValue(way, 'footway', 'sidewalk')) {
         if (!HasTagValue(way, 'bicycle', 'yes')) {

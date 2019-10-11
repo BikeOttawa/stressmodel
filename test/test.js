@@ -11,6 +11,7 @@ let stressmodel_ways = [
   {lts: 0, id: 'p4-1', rule: 'p4', tags: { 'highway': 'motorway_link', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway_link'},
   {lts: 0, id: 'p5-1', rule: 'p5', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40', 'footway': 'sidewalk' }, desc: 'Cycling not permitted. highway=footway and footway=sidewalk'},
   {lts: 0, id: 'p6-1', rule: 'p6', tags: { 'highway': 'residential', 'lanes': '3', 'maxspeed': '40', 'bicycle': 'yes', 'access': 'no' }, desc: 'Cycling not permitted. access=no'},
+  {lts: 0, id: 'p7-1', rule: 'p7', tags: { 'highway': 'proposed', 'lanes': '1', 'maxspeed': '30', 'bicycle': 'yes' }, desc: 'Cycling not permitted. highway=proposed'},
   {lts: 1, id: 's1-1', rule: 's1', tags: { 'highway': 'path', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=path'},
   {lts: 1, id: 's2-1', rule: 's2', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=footway'},
   {lts: 1, id: 's3-1', rule: 's3', tags: { 'highway': 'cycleway', 'lanes': '2', 'maxspeed': '40' }, desc: 'Separated Path, highway=cycleway'},
@@ -107,7 +108,8 @@ let wintermodel_ways = [
   {lts: 0, id: 'p4-1', rule: 'p4', tags: { 'highway': 'motorway_link', 'lanes': '3', 'maxspeed': '40' }, desc: 'Cycling not permitted. highway=motorway_link'},
   {lts: 0, id: 'p5-1', rule: 'p5', tags: { 'highway': 'footway', 'lanes': '2', 'maxspeed': '40', 'footway': 'sidewalk' }, desc: 'Cycling not permitted. highway=footway and footway=sidewalk'},
   {lts: 0, id: 'p6-1', rule: 'p6', tags: { 'highway': 'residential', 'lanes': '3', 'maxspeed': '40', 'bicycle': 'yes', 'access': 'no' }, desc: 'Cycling not permitted. access=no'},
-  {lts: 0, id: 'p7-1', rule: 'wp7', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (dec-mar)'}, desc: 'Cycling not supported in winter'},
+  {lts: 0, id: 'p7-1', rule: 'p7', tags: { 'highway': 'proposed', 'lanes': '1', 'maxspeed': '30', 'bicycle': 'yes' }, desc: 'Cycling not permitted. highway=proposed'},
+  {lts: 0, id: 'p7-2', rule: 'wp7', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (dec-mar)'}, desc: 'Cycling not supported in winter'},
   {lts: 0, id: 'p8-1', rule: 'wp8', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (nov-feb)'}, desc: 'Cycling not supported in winter. Offset overlap'},
   {lts: 0, id: 'p8-2', rule: 'wp8', tags: { 'highway': 'residential', 'lanes': '2', 'maxspeed': '30', 'bicycle': 'yes', 'seasonal': 'yes', 'access:conditional': 'no @ (jan-may)'}, desc: 'Cycling not supported in winter. Offset overlap'},
   {lts: 0, id: 'p9-1', rule: 'wp9', tags: { 'highway': 'path', 'bicycle': 'yes', 'surface': 'dirt'}, desc: 'Cycling not supported in winter. Path surface.'},
@@ -222,8 +224,8 @@ test('Stressmodel Case Tests', (assert) => {
     let w = model_ways[i]
     let way = { id: w.rule, tags: w.tags }
     let result = model.evaluateLTS(way)
-    assert.equal(result.lts, w.lts, 'Check result (' + w.id + '): ' + w.desc)
-    assert.equal(result.rule, w.rule, 'Check rule (' + w.id + '): ' + w.desc)
+    assert.equal(result.lts, w.lts, `Check result (${w.id}): ${w.desc}. Expecting ${w.lts}. Received ${result.lts}`)
+    assert.equal(result.rule, w.rule, `Check rule (${w.id}): ${w.desc}. Expecting ${w.rule}. Received ${result.rule}`)
   }
   assert.end()
 })
