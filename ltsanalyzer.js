@@ -12,6 +12,7 @@ class ltsanalyzer {
     this.destdir = options.destdir
     this.ways = {}
     this.nodes = {}
+    this.names = options.names
     this.inputfile = ''
     this.onCompleteLoadWays = this.onCompleteLoadWays.bind(this)
     this.onCompleteLoadNodes = this.onCompleteLoadNodes.bind(this)
@@ -51,13 +52,12 @@ class ltsanalyzer {
       let tags = childNode.tag
       if (Array.isArray(tags)) {
         for (let t in childNode.tag) {
-          if (this.model.usesTag(childNode.tag[t].k)) {
+          if (this.model.usesTag(childNode.tag[t].k) || (this.names && childNode.tag[t].k === 'name')) {
             newway.tags[childNode.tag[t].k] = childNode.tag[t].v
           }
         }
-      }
-      else if (typeof tags !== 'undefined') {
-        if (this.model.usesTag(tags.k)) {
+      } else if (typeof tags !== 'undefined') {
+        if (this.model.usesTag(tags.k) || (this.names && tags.k === 'name')) {
           newway.tags[tags.k] = tags.v
         }
       }
@@ -87,9 +87,8 @@ class ltsanalyzer {
 
     // Start parsing the XML
     parser.start()
-  
   }
-  
+
   processNodes (name, childNode) {
     if (name === 'node') {
       let newnode = this.nodes[childNode.id]
@@ -104,7 +103,7 @@ class ltsanalyzer {
     if (!this.createLevelFiles()) {
       err = 'Failure while creating the level files'
     }
-    this.onCompleteRun(err)  
+    this.onCompleteRun(err)
   }
 
   createLevelFiles () {
@@ -125,13 +124,17 @@ class ltsanalyzer {
         let way = this.ways[id]
         if (way.level === level) {
           if (fsep) {
-            buffer += ','
+            buffer += ',\n'
           }
           fsep = true
           buffer += '{"type":"Feature","id":"way/'
           buffer += id
           buffer += '","properties":{"id":"way/'
-          buffer += id 
+          buffer += id
+          if (this.names && way.tags['name'] !== undefined) {
+            buffer += '","name":"'
+            buffer += way.tags['name']
+          }
           buffer += '"},"geometry":{"type":"LineString","coordinates":['
           let csep = false
           let ln = way.nodes.length

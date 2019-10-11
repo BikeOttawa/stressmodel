@@ -10,6 +10,7 @@ class Options {
     this.model = 'default'
     this.verbose = false
     this.zero = false
+    this.names = false
   }
 
   usage () {
@@ -26,6 +27,7 @@ class Options {
     console.log('  -h, --help           Displays this help and exits.')
     console.log('  -i, --indent         Indent the output files in a readable format.')
     console.log('  -m, --model=MODEL    Specifies the model to be used. The default is stressmodel.')
+    console.log('  -n, --names          Include the way names in the output.')
     console.log('  -p, --prefix=PREFIX  The prefix to be used for all output files. The')
     console.log('                       default is "level_".')
     console.log('  -v, --verbose        Enables verbose output.')
@@ -57,6 +59,8 @@ class Options {
         this.indent = true
       } else if (arg === '-h' || arg === '--help') {
         help = true
+      } else if (arg === '-n' || arg === '--names') {
+        this.names = true
       } else if (arg === '-p' || arg === '--prefix') {
         if (args.length >= i) {
           i++
@@ -70,15 +74,14 @@ class Options {
           i++
           if (args[i][0] !== '-') {
             this.model = args[i]
-          }
-          else {
+          } else {
             console.log('Error: -m command line argument must be followed by a model specification.')
-            return false;
+            return false
           }
         }
         else {
           console.log('Error: -m command line argument must be followed by a model specification.')
-          return false;
+          return false
         }
       } else if (arg === '-v' || arg === '--verbose') {
         this.verbose = true

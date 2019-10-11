@@ -2,7 +2,7 @@
 
 This is a console application that takes an OSM file and performs an analysis on the ways (streets) based on the information stored in their tags. The arguments are as follows:
 
- `node main.js -f osmfilename -d outputpath [-m model][-p prefix][-v][-z]`
+ `node main.js -f osmfilename -d outputpath [-m model][-n][-p prefix][-v][-z]`
  
  where:
  
@@ -10,6 +10,7 @@ This is a console application that takes an OSM file and performs an analysis on
  * osmfilename   is the path to an OSM file to be processed.
  * outputpath    is the directory where the output files will be created.
  * prefix        is the prefix to be appended to the start of the output filename. The default is 'level_'.
+ * -n            requests that the way names be included in the output.
  * -v            requests verbose output to the console.
  * -z            requests that a level 0 file also be generated that includes the highways where cycling is not permitted.
   
