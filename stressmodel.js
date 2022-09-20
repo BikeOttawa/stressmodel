@@ -272,7 +272,7 @@
           message.push('Increasing LTS to 2 because the maxspeed is between 41-50 km/h and parking present.')
           lts = 2
         }
-      } else if (maxspeed < 65) {
+      } else if (maxspeed < 55) {
         if (lts < 3) {
           rule = 'b7'
           message.push('Increasing LTS to 3 because the maxspeed is between 51-54 km/h and parking present.')
